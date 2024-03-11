@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1FADA"
     android:orientation="vertical"
     tools:context=".AdminHomeActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView10"
@@ -19,6 +24,7 @@
             android:layout_weight="1"
             android:background="@color/secondary"
             android:padding="10dp"
+            app:srcCompat="@drawable/logo_school"
             tools:srcCompat="@drawable/logo_school" />
 
         <TextView
@@ -36,9 +42,72 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/gv_option"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2" />
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/ibtnMajor"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/primary"
+        android:src="@drawable/admin_option_majors"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnClass" />
+
+    <ImageButton
+        android:id="@+id/ibtnStudent"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="@color/primary"
+        android:src="@drawable/admin_option_students"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnTeacher" />
+
+    <ImageButton
+        android:id="@+id/ibtnClass"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="@color/primary"
+        android:scaleType="centerCrop"
+        android:src="@drawable/admin_option_classes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+
+    <ImageButton
+        android:id="@+id/ibtnSubject"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/primary"
+        android:scaleType="centerCrop"
+        android:src="@drawable/admin_option_subjects"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnMajor" />
+
+    <ImageButton
+        android:id="@+id/ibtnTeacher"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="@color/primary"
+        android:src="@drawable/admin_option_teachers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+
+    <ImageButton
+        android:id="@+id/ibtnLogout"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="@color/primary"
+        android:src="@drawable/admin_option_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnStudent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    Button mbtnLogin;
+    Button mbtnLogin, btnAdmin;
     TextView mtvSignup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         //Ánh xạ
         mbtnLogin = (Button) findViewById(R.id.btnLogin);
         mtvSignup = (TextView) findViewById(R.id.tvSignup);
+        btnAdmin = (Button) findViewById(R.id.btnAdmin);
 
         //Xử lý sự kiện OnClick
         mtvSignup.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +35,13 @@ public class LoginActivity extends AppCompatActivity {
                 LoginSuccess(v);
             }
         });
+
+        btnAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Admin(v);
+            }
+        });
     }
 
     //Chuyển đến Đăng Ký
@@ -45,6 +53,11 @@ public class LoginActivity extends AppCompatActivity {
     //Chuyển đến trang chủ GV
     public void LoginSuccess(View view) {
         Intent intent = new Intent(this, ClassListActivity.class);
+        startActivity(intent);
+    }
+
+    public void Admin(View view) {
+        Intent intent = new Intent(this, AdminHomeActivity.class);
         startActivity(intent);
     }
 }
