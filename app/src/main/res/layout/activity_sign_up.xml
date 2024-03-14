@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edt_User_Username"
+        android:id="@+id/edt_User_Name"
         android:layout_width="338dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/edt_User_Username"
         android:layout_width="338dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -47,10 +47,10 @@
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_User_Name" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/edt_User_Password"
         android:layout_width="338dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -62,10 +62,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_User_Username" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/edt_User_Email"
         android:layout_width="338dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -76,10 +76,10 @@
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_User_Password" />
 
     <EditText
-        android:id="@+id/editTextPhone"
+        android:id="@+id/edt_User_Phone"
         android:layout_width="338dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -90,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/edt_User_Email"
         android:paddingLeft="16dp" />
 
     <Button
@@ -107,7 +107,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_User_Phone" />
 
     <TextView
         android:id="@+id/tvLogin"

@@ -96,7 +96,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 TB_User_MatKhau + " TEXT, " +
                 TB_User_HoTen + " TEXT, " +
                 TB_User_Email + " TEXT, " +
-                TB_User_Role + " INTEGER DEFAULT 0 CHECK(" + TB_User_Role + " IN (0, 1)), " +
+                TB_User_Role + " INTEGER DEFAULT 1 CHECK(" + TB_User_Role + " IN (0, 1)), " +
                 TB_User_SDT + " TEXT, " +
                 "PRIMARY KEY (" + TB_User_Username + ")" +
                 ")";

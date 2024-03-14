@@ -30,7 +30,9 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_faculty_list);
+
         mfabThemKhoa = findViewById(R.id.fabThemKhoa);
+
         dbHelper = new dbHelper(this);
 
         displayFacultyList();
@@ -88,10 +90,11 @@ public class AdminFacultyListActivity extends AppCompatActivity {
                 .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //Lấy dữ liệu từ ô nhập
                         String Khoa_Id = medt_Khoa_Id.getText().toString();
                         String Khoa_Ten = medt_Khoa_Ten.getText().toString();
 
-                        // Thực hiện thêm Khoa vào cơ sở dữ liệu
+                        // Thực hiện thêm Khoa vào database
                         addFacultyToDatabase(Khoa_Id, Khoa_Ten);
 
                         // Đóng dialog sau khi thêm Khoa

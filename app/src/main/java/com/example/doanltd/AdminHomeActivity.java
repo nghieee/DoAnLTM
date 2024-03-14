@@ -25,6 +25,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         mibtnStudent = (ImageButton) findViewById(R.id.ibtnStudent);
         mibntMajor = (ImageButton) findViewById(R.id.ibtnMajor);
         mibtnSubject = (ImageButton) findViewById(R.id.ibtnSubject);
+        mibtnLogout = (ImageButton) findViewById(R.id.ibtnLogout);
 
         //Xử lý sự kiện
         mibtnClass.setOnClickListener(new View.OnClickListener() {
@@ -61,34 +62,45 @@ public class AdminHomeActivity extends AppCompatActivity {
                 goToAdminSubjectListActivity(v);
             }
         });
+
+        mibtnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Chuyển về LoginActivity
+                Intent intent = new Intent(AdminHomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                //Kết thúc hoạt động hiện tại tránh trường hợp người dùng back lại trang Admin
+                finish();
+            }
+        });
     }
 
     //Chuyển đến danh sách lớp học
-    public void goToAdminClassListActivity(View view) {
+    private void goToAdminClassListActivity(View view) {
         Intent intent = new Intent(this, AdminClassListActivity.class);
         startActivity(intent);
     }
 
     //Chuyển đến danh sách giảng viên
-    public void goToAdminTeacherListActivity(View view) {
+    private void goToAdminTeacherListActivity(View view) {
         Intent intent = new Intent(this, AdminTeacherListActivity.class);
         startActivity(intent);
     }
 
     //Chuyển đến danh sách sinh viên
-    public void goToAdminStudentListActivity(View view) {
+    private void goToAdminStudentListActivity(View view) {
         Intent intent = new Intent(this, AdminStudentListActivity.class);
         startActivity(intent);
     }
 
     //Chuyển đến danh sách khoa
-    public void goToAdminFacultyListActivity(View view) {
+    private void goToAdminFacultyListActivity(View view) {
         Intent intent = new Intent(this, AdminFacultyListActivity.class);
         startActivity(intent);
     }
 
     //Chuyển đến danh sách môn học
-    public void goToAdminSubjectListActivity(View view) {
+    private void goToAdminSubjectListActivity(View view) {
         Intent intent = new Intent(this, AdminSubjectListActivity.class);
         startActivity(intent);
     }
