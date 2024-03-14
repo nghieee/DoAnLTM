@@ -81,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (newRowUser != -1) {
             //Đăng ký thành công
             Toast.makeText(this, "Đăng ký tài khoản thành công!", Toast.LENGTH_SHORT).show();
-            //Cập nhật lại danh sách Khoa trên ListView
+            //Cập nhật lại danh sách
         } else {
             //Đăng ký thất bại
             Toast.makeText(this, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show();

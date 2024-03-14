@@ -90,19 +90,19 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng User
+        //Tạo bảng User
         String createUserTableQuery = "CREATE TABLE " + TB_USER + " (" +
                 TB_User_Username + " TEXT NOT NULL UNIQUE, " +
                 TB_User_MatKhau + " TEXT, " +
                 TB_User_HoTen + " TEXT, " +
                 TB_User_Email + " TEXT, " +
-                TB_User_Role + " INTEGER DEFAULT 1 CHECK(" + TB_User_Role + " IN (0, 1)), " +
+                TB_User_Role + " INTEGER DEFAULT 0 CHECK(" + TB_User_Role + " IN (0, 1)), " +
                 TB_User_SDT + " TEXT, " +
                 "PRIMARY KEY (" + TB_User_Username + ")" +
                 ")";
         db.execSQL(createUserTableQuery);
 
-        // Tạo bảng Khoa
+        //Tạo bảng Khoa
         String createKhoaTableQuery = "CREATE TABLE " + TB_KHOA + " (" +
                 TB_KHOA_ID + " INTEGER NOT NULL UNIQUE, " +
                 TB_KHOA_TEN + " TEXT, " +
@@ -110,7 +110,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createKhoaTableQuery);
 
-        // Tạo bảng GiangVien
+        //Tạo bảng GiangVien
         String createGiangVienTableQuery = "CREATE TABLE " + TB_GIANGVIEN + " (" +
                 TB_GIANGVIEN_ID + " INTEGER NOT NULL UNIQUE, " +
                 TB_GIANGVIEN_HOTEN + " TEXT, " +
@@ -124,17 +124,17 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createGiangVienTableQuery);
 
-        // Tạo bảng ChuyenNganh
-        String createChuyenNganhTableQuery = "CREATE TABLE " + TB_CHUYENNGANH + " (" +
-                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                TB_CHUYENNGANH_TEN + " TEXT, " +
-                TB_KHOA_ID + " INTEGER, " +
-                "FOREIGN KEY (" + TB_KHOA_ID + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + ")" +
-                ")";
-        db.execSQL(createChuyenNganhTableQuery);
+//        //Tạo bảng ChuyenNganh
+//        String createChuyenNganhTableQuery = "CREATE TABLE " + TB_CHUYENNGANH + " (" +
+//                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                TB_CHUYENNGANH_TEN + " TEXT, " +
+//                TB_KHOA_ID + " INTEGER, " +
+//                "FOREIGN KEY (" + TB_KHOA_ID + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + ")" +
+//                ")";
+//        db.execSQL(createChuyenNganhTableQuery);
 
 
-        // Tạo bảng MonHoc
+        //Tạo bảng MonHoc
         String createMonHocTableQuery = "CREATE TABLE " + TB_MONHOC + " (" +
                 TB_MONHOC_ID + " INTEGER NOT NULL UNIQUE, " +
                 TB_MONHOC_TEN + " TEXT, " +
@@ -145,7 +145,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createMonHocTableQuery);
 
-        // Tạo bảng LopHocPhan
+        //Tạo bảng LopHocPhan
         String createLopHocPhanTableQuery = "CREATE TABLE " + TB_LOPHOCPHAN + " (" +
                 TB_LOPHOCPHAN_ID + " INTEGER NOT NULL UNIQUE, " +
                 TB_LOPHOCPHAN_IDMONHOC + " INTEGER, " +
@@ -158,7 +158,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createLopHocPhanTableQuery);
 
-        // Tạo bảng SinhVien
+        //Tạo bảng SinhVien
         String createSinhVienTableQuery = "CREATE TABLE " + TB_SINHVIEN + " (" +
                 TB_SINHVIEN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TB_SINHVIEN_HOTEN + " TEXT, " +
@@ -175,7 +175,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createSinhVienTableQuery);
 
-        // Tạo bảng Tham gia lớp học
+        //Tạo bảng Tham gia lớp học
         String createThamGiaLopHocTableQuery = "CREATE TABLE " + TB_THAMGIALOPHOC + " (" +
                 TB_THAMGIALOPHOC_IDLOP + " INTEGER NOT NULL, " +
                 TB_THAMGIALOPHOC_IDSV + " INTEGER NOT NULL, " +

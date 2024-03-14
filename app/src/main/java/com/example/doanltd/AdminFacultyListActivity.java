@@ -69,7 +69,6 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         adapter.setOnDeleteClickListener(new AdminFacultyListAdapter.OnDeleteClickListener() {
             @Override
             public void onDeleteClick(String facultyId) {
-                // Xử lý sự kiện xóa ở đây
                 showDeleteConfirmationDialog(facultyId);
             }
         });
