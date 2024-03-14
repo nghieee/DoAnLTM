@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
+import adapter.AdminFacultyListAdapter;
+
 public class AdminHomeActivity extends AppCompatActivity {
     ImageButton mibtnClass, mibtnTeacher, mibtnStudent, mibntMajor, mibtnSubject, mibtnLogout;
 
@@ -49,7 +51,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         mibntMajor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToAdminMajorListActivity(v);
+                goToAdminFacultyListActivity(v);
             }
         });
 
@@ -80,8 +82,8 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     //Chuyển đến danh sách khoa
-    public void goToAdminMajorListActivity(View view) {
-        Intent intent = new Intent(this, AdminMajorListActivity.class);
+    public void goToAdminFacultyListActivity(View view) {
+        Intent intent = new Intent(this, AdminFacultyListActivity.class);
         startActivity(intent);
     }
 
