@@ -1,5 +1,10 @@
 package com.example.doanltd;
 
+import static database.dbHelper.TB_USER;
+import static database.dbHelper.TB_User_MatKhau;
+import static database.dbHelper.TB_User_Role;
+import static database.dbHelper.TB_User_Username;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -52,15 +57,25 @@ public class LoginActivity extends AppCompatActivity {
                 //Lấy thông tin từ trường nhập liệu
                 String Login_Username = medt_LogIn_Username.getText().toString();
                 String Login_Password = medt_LogIn_Password.getText().toString();
+                int Login_Role = getUserRole(Login_Username, Login_Password);
 
                 //Check tk mk
                 if (Login_Username.isEmpty() || Login_Password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản và mật khẩu của bạn", Toast.LENGTH_SHORT).show();
                 } else if (validateLogin(Login_Username, Login_Password)) {
-                    //Đăng nhập thành công, chuyển sang trang GV
-                    Intent intent = new Intent(LoginActivity.this, ClassListActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (Login_Role != -1) {
+                        if (Login_Role == 0) {
+                            //Role 0 vai trò Giảng Viên
+                            Intent intent = new Intent(LoginActivity.this, ClassListActivity.class);
+                            startActivity(intent);
+                        } else {
+                            //Role 1 vai trò Admin
+                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Role ở tài khoản này null nên hong có truy vấn được :((", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     //Đăng nhập thất bại
                     Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không chính xác.", Toast.LENGTH_SHORT).show();
@@ -82,22 +97,45 @@ public class LoginActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         //Thiết lập câu lệnh truy vấn
-        String queryLogin = "SELECT * FROM " + dbHelper.TB_USER + " WHERE " +
-                dbHelper.TB_User_Username + " = ? AND " +
-                dbHelper.TB_User_MatKhau + " = ?";
+        String queryLogin = "SELECT * FROM " +TB_USER + " WHERE " +
+                TB_User_Username + " = ? AND " +
+                TB_User_MatKhau + " = ?";
         String[] selectionArgs = {checkLogin_username, checkLogin_password};
 
         //Thực hiện truy vấn
         Cursor cursor = db.rawQuery(queryLogin, selectionArgs);
 
-        //Kiểm tra xem có bản ghi khớp hay không
+        //Kiểm tra xem có truy vấn được dữ liệu không
         boolean isValid = cursor.moveToFirst();
 
-        // Đóng con trỏ và cơ sở dữ liệu
+        //Đóng con trỏ và database
         cursor.close();
         db.close();
 
         return isValid;
+    }
+    //Truy vấn Role để đăng nhập
+    @SuppressLint("Range")
+    private int getUserRole(String username, String password) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT " + TB_User_Role + " FROM " + TB_USER + " WHERE " +
+                TB_User_Username + " = ? AND " +
+                TB_User_MatKhau + " = ?";
+        String[] selectionArgs = {username, password};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        int role = -1;
+
+        if (cursor.moveToFirst()) {
+            role = cursor.getInt(cursor.getColumnIndex(TB_User_Role));
+        }
+
+        cursor.close();
+        db.close();
+
+        return role;
     }
 
     //Chuyển đến Đăng Ký

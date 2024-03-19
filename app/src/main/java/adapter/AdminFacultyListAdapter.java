@@ -49,7 +49,7 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
             listItem = LayoutInflater.from(mContext).inflate(R.layout.item_faculty_list, parent, false);
         }
 
-        // Lấy dữ liệu từ danh sách
+        //Lấy dữ liệu từ danh sách
         String faculty = mFacultyList.get(position);
 
         //Ánh xạ
@@ -64,13 +64,13 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
         btnKhoaEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lấy dữ liệu từ danh sách
+                //Lấy dữ liệu từ danh sách
                 String faculty = mFacultyList.get(position);
                 String[] facultyData = faculty.split("-");
                 String facultyId = facultyData[0].trim();
                 String facultyName = facultyData[1].trim();
 
-                // Kiểm tra xem callback đã được thiết lập hay chưa
+                //Kiểm tra xem callback đã được thiết lập hay chưa
                 if (editClickListener != null) {
                     // Gọi callback để thông báo về sự kiện bấm nút chỉnh sửa
                     editClickListener.onEditClick(facultyId, facultyName);
@@ -81,14 +81,14 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
         btnKhoaDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lấy dữ liệu từ danh sách
+                //Lấy dữ liệu từ danh sách
                 String faculty = mFacultyList.get(position);
                 String[] facultyData = faculty.split(" - ");
                 String facultyId = facultyData[0].trim();
 
-                // Kiểm tra xem callback đã được thiết lập hay chưa
+                //Kiểm tra xem callback đã được thiết lập hay chưa
                 if (deleteClickListener != null) {
-                    // Gọi callback để thông báo về sự kiện bấm nút xóa
+                    //Gọi callback để thông báo về sự kiện bấm nút xóa
                     deleteClickListener.onDeleteClick(facultyId);
                 }
             }

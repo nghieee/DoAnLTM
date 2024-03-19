@@ -47,6 +47,7 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String TB_CHUYENNGANH = "ChuyenNganh";
     public static final String TB_CHUYENNGANH_ID = "Id";
     public static final String TB_CHUYENNGANH_TEN = "Ten";
+    public static final String TB_CHUYENGANH_IDKHOA = "IdKhoa";
 
     //Biến tĩnh bảng Môn Học
     public static final String TB_MONHOC = "MonHoc";
@@ -124,14 +125,14 @@ public class dbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createGiangVienTableQuery);
 
-//        //Tạo bảng ChuyenNganh
-//        String createChuyenNganhTableQuery = "CREATE TABLE " + TB_CHUYENNGANH + " (" +
-//                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                TB_CHUYENNGANH_TEN + " TEXT, " +
-//                TB_KHOA_ID + " INTEGER, " +
-//                "FOREIGN KEY (" + TB_KHOA_ID + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + ")" +
-//                ")";
-//        db.execSQL(createChuyenNganhTableQuery);
+        //Tạo bảng ChuyenNganh
+        String createChuyenNganhTableQuery = "CREATE TABLE " + TB_CHUYENNGANH + " (" +
+                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TB_CHUYENNGANH_TEN + " TEXT, " +
+                TB_CHUYENGANH_IDKHOA + " INTEGER, " +
+                "FOREIGN KEY (" + TB_CHUYENGANH_IDKHOA + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + ")" +
+                ")";
+        db.execSQL(createChuyenNganhTableQuery);
 
 
         //Tạo bảng MonHoc
@@ -191,7 +192,14 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DB_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_CHUYENNGANH);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_SINHVIEN);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_GIANGVIEN);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_KHOA);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_LOPHOCPHAN);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_THAMGIALOPHOC);
+        db.execSQL("DROP TABLE IF EXISTS " + TB_MONHOC);
         onCreate(db);
     }
 
@@ -214,7 +222,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("dbHelper", "Error while getting faculty list: " + e.getMessage());
+            Log.e("dbHelper", "Lỗi thêm dữ liệu vào danh sách rồi: " + e.getMessage());
         } finally {
             //Đóng cursor sau khi sử dụng
             if (cursor != null) {
