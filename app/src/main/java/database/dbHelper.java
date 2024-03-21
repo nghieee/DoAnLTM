@@ -203,37 +203,5 @@ public class dbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Danh sách Khoa
-    public ArrayList<String> getFacultyList() {
-        ArrayList<String> facultyList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-
-        try {
-            //Truy vấn danh sách tên các khoa từ bảng Khoa
-            cursor = db.query(TB_KHOA, new String[]{TB_KHOA_ID, TB_KHOA_TEN}, null, null, null, null, null);
-
-            //Duyệt qua các dòng kết quả và thêm tên khoa vào danh sách
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    @SuppressLint("Range") String khoaId = cursor.getString(cursor.getColumnIndex(TB_KHOA_ID));
-                    @SuppressLint("Range") String khoaTen = cursor.getString(cursor.getColumnIndex(TB_KHOA_TEN));
-                    facultyList.add(khoaId + " - " + khoaTen); //Thêm vào danh sách dạng "Id - Tên"
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e("dbHelper", "Lỗi thêm dữ liệu vào danh sách rồi: " + e.getMessage());
-        } finally {
-            //Đóng cursor sau khi sử dụng
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        //Đóng cơ sở dữ liệu sau khi sử dụng
-        db.close();
-
-        return facultyList;
-    }
 
 }

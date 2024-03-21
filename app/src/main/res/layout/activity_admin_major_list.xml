@@ -27,7 +27,7 @@
             tools:srcCompat="@drawable/btn_back" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tvMajorList"
             android:layout_width="353dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-2dp"
@@ -40,6 +40,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/lvChuyenNganh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="28dp"
@@ -50,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton6"
+        android:id="@+id/fabThemChuyenNganh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
     private ArrayList<String> mFacultyList;
     private OnEditClickListener editClickListener;
     private OnDeleteClickListener deleteClickListener;
+    private OnItemClickListener itemClickListener;
 
     public interface OnEditClickListener {
         void onEditClick(String facultyId, String facultyName);
@@ -34,7 +36,13 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
         this.deleteClickListener = listener;
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(String facultyId);
+    }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
 
     public AdminFacultyListAdapter(Context context, ArrayList<String> facultyList) {
         super(context, 0, facultyList);
@@ -78,6 +86,7 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
             }
         });
 
+        //Xử lý sự kiện nút xóa item
         btnKhoaDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +99,23 @@ public class AdminFacultyListAdapter extends ArrayAdapter<String>{
                 if (deleteClickListener != null) {
                     //Gọi callback để thông báo về sự kiện bấm nút xóa
                     deleteClickListener.onDeleteClick(facultyId);
+                }
+            }
+        });
+
+        //Xử lý sự kiện ấn vào từng item
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy dữ liệu từ danh sách
+                String faculty = mFacultyList.get(position);
+                String[] facultyData = faculty.split(" - ");
+                String facultyId = facultyData[0].trim();
+
+                // Kiểm tra xem callback đã được thiết lập hay chưa
+                if (itemClickListener != null) {
+                    // Gọi callback để thông báo về sự kiện bấm vào item
+                    itemClickListener.onItemClick(facultyId);
                 }
             }
         });

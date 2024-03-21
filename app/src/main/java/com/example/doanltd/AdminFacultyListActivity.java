@@ -1,12 +1,20 @@
 package com.example.doanltd;
 
+import static database.dbHelper.TB_KHOA;
+import static database.dbHelper.TB_KHOA_ID;
+import static database.dbHelper.TB_KHOA_TEN;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +33,7 @@ import database.dbHelper;
 public class AdminFacultyListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemKhoa;
     database.dbHelper dbHelper;
+    ListView mlvKhoa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +53,16 @@ public class AdminFacultyListActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-    //Hiển thị danh sách khoa
+    //1. Hiển thị danh sách khoa
     private void displayFacultyList() {
         //Lấy danh sách khoa từ cơ sở dữ liệu
-        ArrayList<String> arrayList = dbHelper.getFacultyList();
+        ArrayList<String> arrayList = getFacultyList();
 
         //Tạo adapter và gắn với ListView
         AdminFacultyListAdapter adapter = new AdminFacultyListAdapter(this, arrayList);
-        ListView mlvKhoa = findViewById(R.id.lvKhoa);
+        mlvKhoa = findViewById(R.id.lvKhoa);
         mlvKhoa.setAdapter(adapter);
 
         //Xử lý sự kiện cập nhật
@@ -72,9 +80,63 @@ public class AdminFacultyListActivity extends AppCompatActivity {
                 showDeleteConfirmationDialog(facultyId);
             }
         });
+
+        //Xử lý sự kiện click từng item
+        adapter.setOnItemClickListener(new AdminFacultyListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String facultyId) {
+                // Lấy tên Khoa tương ứng với IdKhoa
+                String facultyName = getFacultyNameById(facultyId);
+
+                // Kiểm tra xem tên Khoa có null hay không
+                if (facultyName != null) {
+                    // Tạo Intent để chuyển sang AdminMajorListActivity
+                    Intent intent = new Intent(AdminFacultyListActivity.this, AdminMajorListActivity.class);
+                    intent.putExtra("TB_KHOA_ID", facultyId);
+                    intent.putExtra("TB_KHOA_TEN", facultyName);
+                    intent.putExtra("title", "Danh sách các chuyên ngành Khoa " + facultyName);
+
+                    // Chuyển sang AdminMajorListActivity
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+    }
+    //2. Danh sách Khoa
+    public ArrayList<String> getFacultyList() {
+        ArrayList<String> facultyList = new ArrayList<>();
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            //Truy vấn danh sách tên các khoa từ bảng Khoa
+            cursor = db.query(TB_KHOA, new String[]{TB_KHOA_ID, TB_KHOA_TEN}, null, null, null, null, null);
+
+            //Duyệt qua các dòng kết quả và thêm tên khoa vào danh sách
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String khoaId = cursor.getString(cursor.getColumnIndex(TB_KHOA_ID));
+                    @SuppressLint("Range") String khoaTen = cursor.getString(cursor.getColumnIndex(TB_KHOA_TEN));
+                    facultyList.add(khoaId + " - " + khoaTen); //Thêm vào danh sách dạng "Id - Tên"
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("dbHelper", "Lỗi thêm dữ liệu vào danh sách rồi: " + e.getMessage());
+        } finally {
+            //Đóng cursor sau khi sử dụng
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        //Đóng cơ sở dữ liệu sau khi sử dụng
+        db.close();
+
+        return facultyList;
     }
 
-    //Hiển thị popup để thêm Khoa
+    //3. Hiển thị popup để thêm Khoa
     private void showAddFacultyPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -111,18 +173,18 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //Thêm Khoa vào database
+    //3.1 Thêm Khoa vào database
     private void addFacultyToDatabase(String facultyId, String facultyName) {
         // Tạo hoặc mở cơ sở dữ liệu để ghi
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Tạo một đối tượng ContentValues để chứa dữ liệu mới
         ContentValues values = new ContentValues();
-        values.put(dbHelper.TB_KHOA_ID, facultyId);
-        values.put(dbHelper.TB_KHOA_TEN, facultyName);
+        values.put(TB_KHOA_ID, facultyId);
+        values.put(TB_KHOA_TEN, facultyName);
 
         // Thực hiện thêm Khoa vào cơ sở dữ liệu
-        long newRowFaculty = db.insert(dbHelper.TB_KHOA, null, values);
+        long newRowFaculty = db.insert(TB_KHOA, null, values);
 
         // Kiểm tra xem thêm Khoa thành công hay không
         if (newRowFaculty != -1) {
@@ -139,7 +201,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         db.close();
     }
 
-    //Hiển thị popup để chỉnh sửa Khoa
+    //4. Hiển thị popup để chỉnh sửa Khoa
     private void showEditFacultyPopup(String currentId, String currentName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -179,18 +241,18 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //Cập nhật thông tin Khoa trong db
+    //4.1 Cập nhật thông tin Khoa trong db
     private void updateFacultyInDatabase(String currentId, String newId, String newName) {
         //Mở cơ sở dữ liệu để ghi
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //Tạo một đối tượng ContentValues để chứa dữ liệu mới
         ContentValues values = new ContentValues();
-        values.put(dbHelper.TB_KHOA_ID, newId);
-        values.put(dbHelper.TB_KHOA_TEN, newName);
+        values.put(TB_KHOA_ID, newId);
+        values.put(TB_KHOA_TEN, newName);
 
         //Thực hiện cập nhật thông tin Khoa trong db
-        int rowsAffectedFaculty = db.update(dbHelper.TB_KHOA, values, dbHelper.TB_KHOA_ID + " = ?", new String[]{currentId});
+        int rowsAffectedFaculty = db.update(TB_KHOA, values, TB_KHOA_ID + " = ?", new String[]{currentId});
 
         if (rowsAffectedFaculty > 0) {
             //Cập nhật thành công
@@ -207,7 +269,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         db.close();
     }
 
-    //Hiển thị xác nhận xóa
+    //5. Hiển thị xác nhận xóa
     private void showDeleteConfirmationDialog(String faculty) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có chắc chắn muốn xóa?")
@@ -231,17 +293,13 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //Xóa Khoa từ cơ sở dữ liệu
+    //5.1 Xóa Khoa từ cơ sở dữ liệu
     private void deleteFaculty(String facultyId) {
         //Mở cơ sở dữ liệu để ghi
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        //Xác định điều kiện xóa
-        String selection = dbHelper.TB_KHOA_ID + "=?";
-        String[] selectionArgs = {facultyId};
-
         //Thực hiện xóa Khoa từ cơ sở dữ liệu
-        int rowsDeleted = db.delete(dbHelper.TB_KHOA, selection, selectionArgs);
+        int rowsDeleted = db.delete(TB_KHOA, TB_KHOA_ID + "=?", new String[]{facultyId});
 
         // Kiểm tra xem có dữ liệu nào bị xóa không
         if (rowsDeleted > 0) {
@@ -257,5 +315,30 @@ public class AdminFacultyListActivity extends AppCompatActivity {
 
         // Đóng cơ sở dữ liệu
         db.close();
+    }
+
+    //6. Phương thức này sẽ lấy tên Khoa từ IdKhoa
+    @SuppressLint("Range")
+    private String getFacultyNameById(String facultyId) {
+        //Đọc database
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        //Khởi tạo một biến String để lưu trữ tên Khoa
+        String facultyName = null;
+
+        //Thực hiện truy vấn
+        Cursor cursor = db.rawQuery("SELECT " + TB_KHOA_TEN + " FROM " + TB_KHOA + " WHERE " + TB_KHOA_ID + " = ?", new String[]{facultyId});
+
+        //Kiểm tra xem cursor có dữ liệu không
+        if (cursor != null && cursor.moveToFirst()) {
+            // Lấy tên Khoa từ cursor
+            facultyName = cursor.getString(cursor.getColumnIndex(TB_KHOA_TEN));
+            // Đóng cursor
+            cursor.close();
+        }
+
+        db.close();
+
+        return facultyName;
     }
 }
