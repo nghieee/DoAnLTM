@@ -5,6 +5,8 @@ import static database.dbHelper.TB_CHUYENNGANH;
 import static database.dbHelper.TB_KHOA;
 import static database.dbHelper.TB_KHOA_ID;
 import static database.dbHelper.TB_KHOA_TEN;
+import static database.dbHelper.TB_MONHOC;
+import static database.dbHelper.TB_MONHOC_IDKHOA;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +37,7 @@ import database.dbHelper;
 
 public class AdminFacultyListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemKhoa;
-    database.dbHelper dbHelper;
+    static database.dbHelper dbHelper;
     ListView mlvKhoa;
     ImageView mbtnBackToAdminHome;
 
@@ -120,7 +122,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     //2. Danh sách Khoa
     public ArrayList<String> getFacultyList() {
         ArrayList<String> facultyList = new ArrayList<>();
-        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = null;
 
         try {
@@ -336,7 +338,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         // Kiểm tra xem có dữ liệu nào bị xóa không
         if (rowsDeleted > 0) {
             //Xóa thành công
-            Toast.makeText(this, ("Đã xóa khoa " + TB_KHOA_TEN), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ("Đã xóa khoa "), Toast.LENGTH_SHORT).show();
 
             //Cập nhật lại danh sách Khoa trên ListView
             displayFacultyList();
@@ -351,16 +353,28 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     private void deleteRelatedMajors(String facultyId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Thực hiện xóa các chuyên ngành tương ứng
-        int rowsDeleted = db.delete(TB_CHUYENNGANH, TB_CHUYENGANH_IDKHOA + " = ?", new String[]{facultyId});
+        //Thực hiện xóa các chuyên ngành có FK = TB_KHOA_ID
+        int deletedFKmajor = db.delete(TB_CHUYENNGANH, TB_CHUYENGANH_IDKHOA + " = ?", new String[]{facultyId});
 
         // Kiểm tra xem có bao nhiêu dòng đã bị xóa
-        if (rowsDeleted > 0) {
+        if (deletedFKmajor > 0) {
             // Có dòng bị xóa, thông báo thành công hoặc thực hiện các tác vụ khác tùy thuộc vào ứng dụng của bạn
-            Toast.makeText(this, "Đã xóa " + rowsDeleted + " chuyên ngành liên quan", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đã xóa " + deletedFKmajor + " chuyên ngành liên quan", Toast.LENGTH_SHORT).show();
         } else {
             // Không có dòng nào bị xóa, thông báo không có chuyên ngành nào được xóa
             Toast.makeText(this, "Không có chuyên ngành nào được xóa", Toast.LENGTH_SHORT).show();
+        }
+
+        //Thực hiện xóa các chuyên ngành có FK = TB_KHOA_ID
+        int deletedFKsubject = db.delete(TB_MONHOC, TB_MONHOC_IDKHOA + " = ?", new String[]{facultyId});
+
+        // Kiểm tra xem có bao nhiêu dòng được cập nhật
+        if (deletedFKsubject > 0) {
+            // Có dòng bị xóa, thông báo thành công hoặc thực hiện các tác vụ khác tùy thuộc vào ứng dụng của bạn
+            Toast.makeText(this, "Đã xóa " + deletedFKsubject + " môn học liên quan", Toast.LENGTH_SHORT).show();
+        } else {
+            // Không có dòng nào bị xóa, thông báo không có chuyên ngành nào được xóa
+            Toast.makeText(this, "Không có môn học nào được xóa", Toast.LENGTH_SHORT).show();
         }
 
         // Đóng cơ sở dữ liệu
