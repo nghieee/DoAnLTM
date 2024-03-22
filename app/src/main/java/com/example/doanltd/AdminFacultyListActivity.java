@@ -1,5 +1,7 @@
 package com.example.doanltd;
 
+import static database.dbHelper.TB_CHUYENGANH_IDKHOA;
+import static database.dbHelper.TB_CHUYENNGANH;
 import static database.dbHelper.TB_KHOA;
 import static database.dbHelper.TB_KHOA_ID;
 import static database.dbHelper.TB_KHOA_TEN;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemKhoa;
     database.dbHelper dbHelper;
     ListView mlvKhoa;
+    ImageView mbtnBackToAdminHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,16 @@ public class AdminFacultyListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showAddFacultyPopup();
+            }
+        });
+
+        mbtnBackToAdminHome = findViewById(R.id.btnBackToAdminHome);
+        mbtnBackToAdminHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminFacultyListActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -92,8 +106,8 @@ public class AdminFacultyListActivity extends AppCompatActivity {
                 if (facultyName != null) {
                     // Tạo Intent để chuyển sang AdminMajorListActivity
                     Intent intent = new Intent(AdminFacultyListActivity.this, AdminMajorListActivity.class);
-                    intent.putExtra("TB_KHOA_ID", facultyId);
-                    intent.putExtra("TB_KHOA_TEN", facultyName);
+                    intent.putExtra("facultyId", facultyId);
+                    intent.putExtra("facultyName", facultyName);
                     intent.putExtra("title", "Danh sách các chuyên ngành Khoa " + facultyName);
 
                     // Chuyển sang AdminMajorListActivity
@@ -253,7 +267,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
 
         //Thực hiện cập nhật thông tin Khoa trong db
         int rowsAffectedFaculty = db.update(TB_KHOA, values, TB_KHOA_ID + " = ?", new String[]{currentId});
-
+        updateMajorForeignKey(newId, currentId);
         if (rowsAffectedFaculty > 0) {
             //Cập nhật thành công
             Toast.makeText(this, "Thông tin Khoa đã được cập nhật!", Toast.LENGTH_SHORT).show();
@@ -269,14 +283,32 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         db.close();
     }
 
+    // Phương thức cập nhật khóa ngoại trong bảng TB_CHUYENNGANH khi khóa chính của bảng TB_KHOA thay đổi
+    private void updateMajorForeignKey(String newFacultyId, String oldFacultyId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Tạo truy vấn cập nhật khóa ngoại trong bảng TB_CHUYENNGANH
+        String updateQuery = "UPDATE " + TB_CHUYENNGANH +
+                " SET " + TB_CHUYENGANH_IDKHOA + " = ?" +
+                " WHERE " + TB_CHUYENGANH_IDKHOA + " = ?";
+
+        // Thực hiện truy vấn với giá trị mới và giá trị cũ của idKhoa
+        String[] updateArgs = {newFacultyId, oldFacultyId};
+        db.execSQL(updateQuery, updateArgs);
+
+        // Đóng cơ sở dữ liệu
+        db.close();
+    }
+
     //5. Hiển thị xác nhận xóa
     private void showDeleteConfirmationDialog(String faculty) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Bạn có chắc chắn muốn xóa?")
+        builder.setMessage("Bạn sẽ xóa luôn những chuyên ngành thuộc khoa này?")
                 .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //Xác nhận xóa, gọi hàm xóa Khoa
                         deleteFaculty(faculty);
+                        deleteRelatedMajors(faculty);
                     }
                 })
                 .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -304,13 +336,31 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         // Kiểm tra xem có dữ liệu nào bị xóa không
         if (rowsDeleted > 0) {
             //Xóa thành công
-            Toast.makeText(this, "Đã xóa thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ("Đã xóa khoa " + TB_KHOA_TEN), Toast.LENGTH_SHORT).show();
 
             //Cập nhật lại danh sách Khoa trên ListView
             displayFacultyList();
         } else {
             //Xóa không thành công
             Toast.makeText(this, "Xóa thất bại!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Đóng cơ sở dữ liệu
+        db.close();
+    }
+    private void deleteRelatedMajors(String facultyId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Thực hiện xóa các chuyên ngành tương ứng
+        int rowsDeleted = db.delete(TB_CHUYENNGANH, TB_CHUYENGANH_IDKHOA + " = ?", new String[]{facultyId});
+
+        // Kiểm tra xem có bao nhiêu dòng đã bị xóa
+        if (rowsDeleted > 0) {
+            // Có dòng bị xóa, thông báo thành công hoặc thực hiện các tác vụ khác tùy thuộc vào ứng dụng của bạn
+            Toast.makeText(this, "Đã xóa " + rowsDeleted + " chuyên ngành liên quan", Toast.LENGTH_SHORT).show();
+        } else {
+            // Không có dòng nào bị xóa, thông báo không có chuyên ngành nào được xóa
+            Toast.makeText(this, "Không có chuyên ngành nào được xóa", Toast.LENGTH_SHORT).show();
         }
 
         // Đóng cơ sở dữ liệu

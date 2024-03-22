@@ -17,20 +17,20 @@ import java.util.ArrayList;
 public class AdminMajorListAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private ArrayList<String> mMajorList;
-    private AdminFacultyListAdapter.OnEditClickListener editClickListener;
-    private AdminFacultyListAdapter.OnDeleteClickListener deleteClickListener;
+    private OnEditClickListener editClickListener;
+    private OnDeleteClickListener deleteClickListener;
 
     public interface OnEditClickListener {
-        void onEditClick(String facultyId, String facultyName);
+        void onEditClick(String majorId, String majorName);
     }
-    public void setOnEditClickListener(AdminFacultyListAdapter.OnEditClickListener listener) {
+    public void setOnEditClickListener(OnEditClickListener listener) {
         this.editClickListener = listener;
     }
 
     public interface OnDeleteClickListener {
         void onDeleteClick(String facultyId);
     }
-    public void setOnDeleteClickListener(AdminFacultyListAdapter.OnDeleteClickListener listener) {
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
         this.deleteClickListener = listener;
     }
 
@@ -48,7 +48,7 @@ public class AdminMajorListAdapter extends ArrayAdapter<String> {
         }
 
         //Lấy dữ liệu từ danh sách
-        String faculty = mMajorList.get(position);
+        String major = mMajorList.get(position);
 
         //Ánh xạ
         TextView mtvMajor = listItem.findViewById(R.id.tvMajor);
@@ -56,7 +56,7 @@ public class AdminMajorListAdapter extends ArrayAdapter<String> {
         ImageButton btnChuyenNganhDelete = listItem.findViewById(R.id.btnChuyenNganhDelete);
 
         //Hiển thị dữ liệu
-        mtvMajor.setText(faculty);
+        mtvMajor.setText(major);
 
         //Xử lý sự kiện khi nhấn nút sửa
         btnChuyenNganhEdit.setOnClickListener(new View.OnClickListener() {

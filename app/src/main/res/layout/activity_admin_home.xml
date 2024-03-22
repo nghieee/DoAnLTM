@@ -24,8 +24,7 @@
             android:layout_weight="1"
             android:background="@color/secondary"
             android:padding="10dp"
-            app:srcCompat="@drawable/logo_school"
-            tools:srcCompat="@drawable/logo_school" />
+            android:src="@drawable/logo_school" />
 
         <TextView
             android:id="@+id/textView20"

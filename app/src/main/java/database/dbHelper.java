@@ -127,7 +127,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
         //Tạo bảng ChuyenNganh
         String createChuyenNganhTableQuery = "CREATE TABLE " + TB_CHUYENNGANH + " (" +
-                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TB_CHUYENNGANH_ID + " INTEGER PRIMARY KEY, " +
                 TB_CHUYENNGANH_TEN + " TEXT, " +
                 TB_CHUYENGANH_IDKHOA + " INTEGER, " +
                 "FOREIGN KEY (" + TB_CHUYENGANH_IDKHOA + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + ")" +
