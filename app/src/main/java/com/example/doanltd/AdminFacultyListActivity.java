@@ -37,7 +37,7 @@ import database.dbHelper;
 
 public class AdminFacultyListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemKhoa;
-    static database.dbHelper dbHelper;
+    database.dbHelper dbHelper;
     ListView mlvKhoa;
     ImageView mbtnBackToAdminHome;
 
@@ -350,6 +350,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         // Đóng cơ sở dữ liệu
         db.close();
     }
+    //Xóa tham chiếu đến khóa phụ bảng khác
     private void deleteRelatedMajors(String facultyId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

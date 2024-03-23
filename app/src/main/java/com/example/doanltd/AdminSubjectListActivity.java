@@ -228,29 +228,6 @@ public class AdminSubjectListActivity extends AppCompatActivity {
 
         return facultyList;
     }
-    @SuppressLint("Range")
-    private String getFacultyNameById(String facultyId) {
-        String facultyName = "";
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = null;
-
-        try {
-            cursor = db.query(TB_KHOA, new String[]{TB_KHOA_TEN}, TB_KHOA_ID + "=?", new String[]{facultyId}, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                facultyName = cursor.getString(cursor.getColumnIndex(TB_KHOA_TEN));
-            }
-        } catch (Exception e) {
-            Log.e("dbHelper", "Error retrieving faculty name: " + e.getMessage());
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            db.close();
-        }
-
-        return facultyName;
-    }
 
     //3.1 Thêm vào database
     private void addSubjectToDatabase(String subjectId, String subjectName, String selectedFacultyId) {
@@ -288,25 +265,25 @@ public class AdminSubjectListActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.popup_edit_subject, null);
         builder.setView(dialogView);
 
-        // Khởi tạo các trường nhập liệu
+        //Khởi tạo các trường nhập liệu
         EditText edtNewMonHocId = dialogView.findViewById(R.id.edt_newMonHocId);
         EditText edtNewMonHocTen = dialogView.findViewById(R.id.edt_newMonHocTen);
         Spinner mspnNewMonHocIdKhoa = dialogView.findViewById(R.id.spn_newMonHoc_IdKhoa);
 
-        // Hiển thị thông tin hiện tại của Môn học trong các trường nhập liệu
+        //Hiển thị thông tin hiện tại của Môn học trong các trường nhập liệu
         edtNewMonHocId.setText(currentId);
         edtNewMonHocTen.setText(currentName);
 
-        // Lấy danh sách khoa từ cơ sở dữ liệu
+        //Lấy danh sách khoa từ cơ sở dữ liệu
         ArrayList<String> facultyList = getFacultyList();
 
-        // Tạo một ArrayAdapter để liên kết dữ liệu với Spinner
+        //Tạo một ArrayAdapter để liên kết dữ liệu với Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, facultyList);
 
-        // Gán adapter cho Spinner
+        //Gán adapter cho Spinner
         mspnNewMonHocIdKhoa.setAdapter(adapter);
 
-        // Set giá trị mặc định cho Spinner là khoa hiện tại của môn học
+        //Set giá trị mặc định cho Spinner là khoa hiện tại của môn học
         int index = getFacultyList().indexOf(currentFacultyId);
         if (index != -1) {
             mspnNewMonHocIdKhoa.setSelection(index);
@@ -320,10 +297,10 @@ public class AdminSubjectListActivity extends AppCompatActivity {
                         String newMonHocTen = edtNewMonHocTen.getText().toString();
                         String selectedFacultyId = getSelectedFacultyId(mspnNewMonHocIdKhoa); // Lấy TB_KHOA_ID từ Spinner
 
-                        // Thực hiện cập nhật thông tin Môn học trong cơ sở dữ liệu
+                        //Thực hiện cập nhật thông tin Môn học trong cơ sở dữ liệu
                         updateSubjectInDatabase(currentId, newMonHocId, newMonHocTen, selectedFacultyId);
 
-                        // Đóng dialog sau khi cập nhật
+                        //Đóng dialog sau khi cập nhật
                         dialog.dismiss();
                     }
                 })
@@ -338,7 +315,7 @@ public class AdminSubjectListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //4.1 Cập nhật thông tin Khoa trong db
+    //4.1 Cập nhật thông tin môn trong db
     private void updateSubjectInDatabase(String currentId, String newId, String newName, String selectedFacultyId) {
         //Mở cơ sở dữ liệu để ghi
         SQLiteDatabase db = dbHelper.getWritableDatabase();

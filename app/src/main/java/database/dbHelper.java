@@ -42,6 +42,7 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String TB_GIANGVIEN_EMAIL = "Email";
     public static final String TB_GIANGVIEN_SDT = "SDT";
     public static final String TB_GIANGVIEN_IDKHOA = "IdKhoa";
+    public static final String TB_GIANGVIEN_USERNAME = "gv_username";
 
     //Biến tĩnh bảng Chuyên Ngành
     public static final String TB_CHUYENNGANH = "ChuyenNganh";
@@ -113,14 +114,16 @@ public class dbHelper extends SQLiteOpenHelper {
 
         //Tạo bảng GiangVien
         String createGiangVienTableQuery = "CREATE TABLE " + TB_GIANGVIEN + " (" +
-                TB_GIANGVIEN_ID + " INTEGER NOT NULL UNIQUE, " +
+                TB_GIANGVIEN_ID + " INTEGER UNIQUE, " +
                 TB_GIANGVIEN_HOTEN + " TEXT, " +
                 TB_GIANGVIEN_NGAYSINH + " TEXT, " +
                 TB_GIANGVIEN_GIOITINH + " TEXT, " +
                 TB_GIANGVIEN_EMAIL + " TEXT, " +
                 TB_GIANGVIEN_SDT + " TEXT, " +
                 TB_GIANGVIEN_IDKHOA + " INTEGER, " +
+                TB_GIANGVIEN_USERNAME + " TEXT, " +
                 "FOREIGN KEY (" + TB_GIANGVIEN_IDKHOA + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + "), " +
+                "FOREIGN KEY (" + TB_GIANGVIEN_USERNAME + ") REFERENCES " + TB_USER + "(" + TB_User_Username + "), " +
                 "PRIMARY KEY (" + TB_GIANGVIEN_ID + ")" +
                 ")";
         db.execSQL(createGiangVienTableQuery);

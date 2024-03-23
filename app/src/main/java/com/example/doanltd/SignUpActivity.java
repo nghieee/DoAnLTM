@@ -1,5 +1,10 @@
 package com.example.doanltd;
 
+import static database.dbHelper.TB_GIANGVIEN;
+import static database.dbHelper.TB_GIANGVIEN_EMAIL;
+import static database.dbHelper.TB_GIANGVIEN_HOTEN;
+import static database.dbHelper.TB_GIANGVIEN_SDT;
+import static database.dbHelper.TB_GIANGVIEN_USERNAME;
 import static database.dbHelper.TB_USER;
 import static database.dbHelper.TB_User_Email;
 import static database.dbHelper.TB_User_HoTen;
@@ -73,7 +78,9 @@ public class SignUpActivity extends AppCompatActivity {
         mtvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToLoginActivity(v);
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -84,19 +91,20 @@ public class SignUpActivity extends AppCompatActivity {
             //Hiển thị thông báo lỗi nếu một trong các trường nhập liệu không được điền đầy đủ
             Toast.makeText(SignUpActivity.this, "Vui lòng điền đầy đủ thông tin.", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!isValidEmail(email)) {
+        } else if (!utils.utils.isValidFullName(name)) {
+            //Hiển thị thông báo lỗi nếu địa chỉ email không hợp lệ
+            Toast.makeText(SignUpActivity.this, "Vui lòng nhập họ tên hợp lệ.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!utils.utils.isValidEmail(email)) {
             //Hiển thị thông báo lỗi nếu địa chỉ email không hợp lệ
             Toast.makeText(SignUpActivity.this, "Vui lòng nhập địa chỉ email hợp lệ.", Toast.LENGTH_SHORT).show();
             return false;
+        } else if (!utils.utils.isValidPhoneNumber(phone)) {
+            //Hiển thị thông báo lỗi nếu địa chỉ email không hợp lệ
+            Toast.makeText(SignUpActivity.this, "Vui lòng nhập sđt hợp lệ.", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
-    }
-    private boolean isValidEmail(String email) {
-        //Kiểm tra địa chỉ email
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        //So sánh giá trị nhập với biểu thức
-        return email.matches(emailPattern);
     }
 
     //Thêm Admin vào database
@@ -146,6 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
         //Kiểm tra SignUp thành công hay không
         if (newRowUser != -1) {
             //Đăng ký thành công
+            addTeacherToDatabase(userName, userEmail, userPhone, userUsername);
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Đăng ký tài khoản thành công!", Toast.LENGTH_SHORT).show();
@@ -160,9 +169,26 @@ public class SignUpActivity extends AppCompatActivity {
         db.close();
     }
 
+    private void addTeacherToDatabase(String teacherName, String teacherEmail, String teacherPhone, String teacherUsername) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-    public void goToLoginActivity(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        ContentValues values = new ContentValues();
+        values.put(TB_GIANGVIEN_HOTEN, teacherName);
+        values.put(TB_GIANGVIEN_EMAIL, teacherEmail);
+        values.put(TB_GIANGVIEN_SDT, teacherPhone);
+        values.put(TB_GIANGVIEN_USERNAME, teacherUsername);
+
+        long newRowTeacher = db.insert(TB_GIANGVIEN, null, values);
+
+        if (newRowTeacher != -1) {
+            // Thêm giảng viên thành công
+            Toast.makeText(this, "Thêm giảng viên thành công!", Toast.LENGTH_SHORT).show();
+        } else {
+            // Thêm giảng viên thất bại
+            Toast.makeText(this, "Thêm giảng viên thất bại!", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
     }
+
 }
