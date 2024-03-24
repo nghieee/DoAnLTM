@@ -26,6 +26,19 @@ public class LoginActivity extends AppCompatActivity {
     TextView mtvSignup;
     database.dbHelper dbHelper;
 
+    private long backpressTime;
+    /** @noinspection deprecation*/
+    @Override
+    public void onBackPressed() {
+        if (backpressTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(this, "Nhấn back lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        }
+        backpressTime = System.currentTimeMillis();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         mtvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Gọi phương thức chuyển đến Đăng Ký
-                goToSignUpActivity(v);
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -66,12 +79,16 @@ public class LoginActivity extends AppCompatActivity {
                     if (Login_Role != -1) {
                         if (Login_Role == 0) {
                             //Role 0 vai trò Giảng Viên
-                            Intent intent = new Intent(LoginActivity.this, ClassListActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, UserClassListActivity.class);
+                            intent.putExtra("loginUsername", Login_Username);
                             startActivity(intent);
+                            finish();
+
                         } else {
                             //Role 1 vai trò Admin
                             Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "Role ở tài khoản này null nên hong có truy vấn được :((", Toast.LENGTH_SHORT).show();
@@ -136,12 +153,6 @@ public class LoginActivity extends AppCompatActivity {
         db.close();
 
         return role;
-    }
-
-    //Chuyển đến Đăng Ký
-    private void goToSignUpActivity(View view) {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
     }
 
     private void Admin(View view) {

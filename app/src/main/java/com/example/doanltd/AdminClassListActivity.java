@@ -9,6 +9,6 @@ public class AdminClassListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_class_list);
+        setContentView(R.layout.admin_class_list_activity);
     }
 }

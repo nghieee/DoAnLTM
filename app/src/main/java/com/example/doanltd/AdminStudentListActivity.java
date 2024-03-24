@@ -25,7 +25,7 @@ public class AdminStudentListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_student_list);
+        setContentView(R.layout.admin_student_list_activity);
         mfabThemSV = (FloatingActionButton) findViewById(R.id.fabThemSV);
 
         dbHelper = new dbHelper(this);
@@ -43,7 +43,7 @@ public class AdminStudentListActivity extends AppCompatActivity {
         //Xây dựng AlertDialog để hiển thị popup
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_add_student, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_student_add, null);
         builder.setView(dialogView);
 
         //Khởi tạo các trường nhập liệu trong popup

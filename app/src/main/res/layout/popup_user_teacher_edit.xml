@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edt_u_teacher_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Họ và tên" />
+
+    <EditText
+        android:id="@+id/edt_u_teacher_dob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày sinh (dd/MM/yyyy)"
+        android:inputType="date" />
+
+    <RadioGroup
+        android:id="@+id/radio_u_group_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_u_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nam" />
+
+        <RadioButton
+            android:id="@+id/radio_u_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nữ" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edt_u_teacher_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/edt_u_teacher_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="SĐT"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/edt_u_teacher_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mật khẩu"
+        android:inputType="text" />
+
+</LinearLayout>

@@ -26,14 +26,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import adapter.AdminFacultyListAdapter;
 import adapter.AdminSubjectListAdapter;
 import database.dbHelper;
 
@@ -45,7 +43,7 @@ public class AdminSubjectListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_subject_list);
+        setContentView(R.layout.admin_subject_list_activity);
 
         dbHelper = new dbHelper(this);
 
@@ -138,7 +136,7 @@ public class AdminSubjectListActivity extends AppCompatActivity {
     private void showAddSubjectPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_add_subject, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_subject_add, null);
         builder.setView(dialogView);
 
         // Khởi tạo các trường nhập liệu
@@ -262,7 +260,7 @@ public class AdminSubjectListActivity extends AppCompatActivity {
     private void showEditSubjectPopup(String currentId, String currentName, String currentFacultyId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_edit_subject, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_subject_edit, null);
         builder.setView(dialogView);
 
         //Khởi tạo các trường nhập liệu

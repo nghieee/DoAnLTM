@@ -1,7 +1,8 @@
 package com.example.doanltd;
 
-import static database.dbHelper.TB_CHUYENGANH_IDKHOA;
 import static database.dbHelper.TB_CHUYENNGANH;
+import static database.dbHelper.TB_CHUYENNGANH_ID;
+import static database.dbHelper.TB_CHUYENNGANH_TEN;
 import static database.dbHelper.TB_GIANGVIEN;
 import static database.dbHelper.TB_GIANGVIEN_EMAIL;
 import static database.dbHelper.TB_GIANGVIEN_GIOITINH;
@@ -14,10 +15,6 @@ import static database.dbHelper.TB_GIANGVIEN_USERNAME;
 import static database.dbHelper.TB_KHOA;
 import static database.dbHelper.TB_KHOA_ID;
 import static database.dbHelper.TB_KHOA_TEN;
-import static database.dbHelper.TB_MONHOC;
-import static database.dbHelper.TB_MONHOC_ID;
-import static database.dbHelper.TB_MONHOC_IDKHOA;
-import static database.dbHelper.TB_MONHOC_TEN;
 import static database.dbHelper.TB_USER;
 import static database.dbHelper.TB_User_Username;
 
@@ -44,20 +41,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import adapter.AdminSubjectListAdapter;
 import adapter.AdminTeacherListAdapter;
 import database.dbHelper;
 import utils.utils;
 
 public class AdminTeacherListActivity extends AppCompatActivity {
-    database.dbHelper dbHelper;
+    static database.dbHelper dbHelper;
     ListView mlvGV;
     ImageView mbtnGvToAdminHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_teacher_list);
+        setContentView(R.layout.admin_teacher_list_activity);
 
         dbHelper = new dbHelper(this);
 
@@ -150,7 +146,7 @@ public class AdminTeacherListActivity extends AppCompatActivity {
     private void showEditTeacherPopup(String currentId, String currentName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_edit_teacher, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_teacher_edit, null);
         builder.setView(dialogView);
 
         //Khởi tạo các trường nhập liệu
@@ -255,7 +251,7 @@ public class AdminTeacherListActivity extends AppCompatActivity {
     }
     //Lấy idkhoa để hiển thị spinner
     @SuppressLint("Range")
-    private String getSelectedFacultyId(Spinner spinner) {
+    static String getSelectedFacultyId(Spinner spinner) {
         int position = spinner.getSelectedItemPosition();
         String selectedFacultyId = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -353,7 +349,14 @@ public class AdminTeacherListActivity extends AppCompatActivity {
         String[] teacherInfo = null;
 
         try {
-            cursor = db.rawQuery("SELECT * FROM " + TB_GIANGVIEN +
+            cursor = db.rawQuery("SELECT " + TB_GIANGVIEN + "." + TB_GIANGVIEN_ID + ", " +
+                    TB_GIANGVIEN + "." + TB_GIANGVIEN_HOTEN + ", " +
+                    TB_GIANGVIEN + "." + TB_GIANGVIEN_NGAYSINH + ", " +
+                    TB_GIANGVIEN + "." + TB_GIANGVIEN_GIOITINH + ", " +
+                    TB_GIANGVIEN + "." + TB_GIANGVIEN_EMAIL + ", " +
+                    TB_GIANGVIEN + "." + TB_GIANGVIEN_SDT + ", " +
+                    TB_KHOA + "." + TB_KHOA_TEN +
+                    " FROM " + TB_GIANGVIEN +
                     " LEFT JOIN " + TB_KHOA +
                     " ON " + TB_GIANGVIEN + "." + TB_GIANGVIEN_IDKHOA + " = " + TB_KHOA + "." + TB_KHOA_ID +
                     " WHERE " + TB_GIANGVIEN + "." + TB_GIANGVIEN_ID + " = ?", new String[]{teacherId});

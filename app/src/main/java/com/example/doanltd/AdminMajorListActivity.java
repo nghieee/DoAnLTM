@@ -4,9 +4,6 @@ import static database.dbHelper.TB_CHUYENGANH_IDKHOA;
 import static database.dbHelper.TB_CHUYENNGANH;
 import static database.dbHelper.TB_CHUYENNGANH_ID;
 import static database.dbHelper.TB_CHUYENNGANH_TEN;
-import static database.dbHelper.TB_KHOA;
-import static database.dbHelper.TB_KHOA_ID;
-import static database.dbHelper.TB_KHOA_TEN;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +28,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import adapter.AdminFacultyListAdapter;
 import adapter.AdminMajorListAdapter;
 import database.dbHelper;
 
@@ -46,14 +42,14 @@ public class AdminMajorListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_major_list);
+        setContentView(R.layout.admin_major_list_activity);
 
         // Ánh xạ các thành phần trong layout
         mfabThemChuyenNganh = findViewById(R.id.fabThemChuyenNganh);
         mlvChuyenNganh = findViewById(R.id.lvChuyenNganh);
         dbHelper = new dbHelper(this);
 
-        // Nhận thông tin Khoa từ Intent
+        //Nhận thông tin Khoa từ Intent Khoa
         Intent intent = getIntent();
         mtvTitleMajorList = findViewById(R.id.tvMajorList);
         if (intent != null) {
@@ -147,7 +143,7 @@ public class AdminMajorListActivity extends AppCompatActivity {
     private void showAddMajorPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_add_major, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_major_add, null);
         builder.setView(dialogView);
 
         // Khởi tạo các trường nhập liệu
@@ -217,7 +213,7 @@ public class AdminMajorListActivity extends AppCompatActivity {
     private void showEditMajorPopup(String currentMajorId, String currentMajorName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_edit_major, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_major_edit, null);
         builder.setView(dialogView);
 
         // Khởi tạo các trường nhập liệu
@@ -268,13 +264,13 @@ public class AdminMajorListActivity extends AppCompatActivity {
 
         if (rowsAffectedFaculty > 0) {
             //Cập nhật thành công
-            Toast.makeText(this, "Thông tin Khoa đã được cập nhật!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thông tin chuyên ngaành đã được cập nhật!", Toast.LENGTH_SHORT).show();
 
             //Cập nhật lại danh sách khoa trên ListView
             displayMajorList();
         } else {
             //Cập nhật thất bại
-            Toast.makeText(this, "Cập nhật thông tin Khoa thất bại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cập nhật thông tin chuyên ngành thất bại!", Toast.LENGTH_SHORT).show();
         }
 
         //Đóng db sau khi thêm xong

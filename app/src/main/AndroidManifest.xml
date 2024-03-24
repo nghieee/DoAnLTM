@@ -34,16 +34,16 @@
             android:name=".AdminFacultyListActivity"
             android:exported="false" />
         <activity
-            android:name=".TeacherListActivity"
+            android:name=".UserTeacherDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".StudentDetailActivity"
+            android:name=".UserStudentDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".StudentListActivity"
+            android:name=".UserStudentListActivity"
             android:exported="false" />
         <activity
-            android:name=".ClassListActivity"
+            android:name=".UserClassListActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"

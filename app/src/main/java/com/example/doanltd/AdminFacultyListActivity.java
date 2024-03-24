@@ -21,8 +21,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,14 +35,14 @@ import database.dbHelper;
 
 public class AdminFacultyListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemKhoa;
-    database.dbHelper dbHelper;
+    static database.dbHelper dbHelper;
     ListView mlvKhoa;
     ImageView mbtnBackToAdminHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_faculty_list);
+        setContentView(R.layout.admin_faculty_list_activity);
 
         mfabThemKhoa = findViewById(R.id.fabThemKhoa);
 
@@ -120,7 +118,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         });
     }
     //2. Danh sách Khoa
-    public ArrayList<String> getFacultyList() {
+    public static ArrayList<String> getFacultyList() {
         ArrayList<String> facultyList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = null;
@@ -156,7 +154,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     private void showAddFacultyPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_add_faculty, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_faculty_add, null);
         builder.setView(dialogView);
 
         //Khởi tạo các trường nhập liệu
@@ -221,7 +219,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
     private void showEditFacultyPopup(String currentId, String currentName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_edit_faculty, null);
+        View dialogView = inflater.inflate(R.layout.popup_admin_faculty_edit, null);
         builder.setView(dialogView);
 
         // Khởi tạo các trường nhập liệu

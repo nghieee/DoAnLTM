@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edt_SV_HoTen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Họ và tên" />
+
+    <EditText
+        android:id="@+id/edt_SV_NgaySinh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày sinh"
+        android:inputType="date" />
+
+    <RadioGroup
+        android:id="@+id/rg_SV_GioiTinh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nam" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nữ" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edt_SV_Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/edt_SV_NienKhoa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Niên khóa" />
+
+    <EditText
+        android:id="@+id/edt_SV_DiaChi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Địa chỉ" />
+
+    <EditText
+        android:id="@+id/edt_SV_SDT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số điện thoại" />
+
+    <EditText
+        android:id="@+id/edt_SV_Khoa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Khoa" />
+
+    <EditText
+        android:id="@+id/edt_SV_ChuyenNganh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Chuyên ngành" />
+
+    <Button
+        android:id="@+id/btn_SV_Them"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_custom"
+        android:text="Thêm sinh viên" />
+</LinearLayout>
