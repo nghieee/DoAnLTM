@@ -4,6 +4,8 @@ import static database.dbHelper.TB_CHUYENGANH_IDKHOA;
 import static database.dbHelper.TB_CHUYENNGANH;
 import static database.dbHelper.TB_CHUYENNGANH_ID;
 import static database.dbHelper.TB_CHUYENNGANH_TEN;
+import static database.dbHelper.TB_KHOA;
+import static database.dbHelper.TB_KHOA_ID;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,7 @@ import database.dbHelper;
 public class AdminMajorListActivity extends AppCompatActivity {
     FloatingActionButton mfabThemChuyenNganh;
     ListView mlvChuyenNganh;
-    dbHelper dbHelper;
+    static dbHelper dbHelper;
     String facultyId;
     ImageButton mbtnBackToFaculty;
     TextView mtvTitleMajorList;
@@ -104,7 +107,7 @@ public class AdminMajorListActivity extends AppCompatActivity {
         });
     }
 
-    // Lấy danh sách chuyên ngành từ cơ sở dữ liệu
+    // Lấy danh sách chuyên ngành theo KHÓA NGOẠI KHOA từ cơ sở dữ liệu
     public ArrayList<String> getMajorList(String facultyId) {
         ArrayList<String> majorList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -324,4 +327,11 @@ public class AdminMajorListActivity extends AppCompatActivity {
         // Đóng cơ sở dữ liệu
         db.close();
     }
+
+
+    //Lấy dữ liệu môn học để đưa lên spinner
+
+    //Lấy danh sách Chuyên Ngành
+
+
 }

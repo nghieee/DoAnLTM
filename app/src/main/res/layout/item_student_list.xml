@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tvMajor"
+        android:id="@+id/tvStudent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -15,7 +15,7 @@
         android:textSize="18sp" />
 
     <ImageButton
-        android:id="@+id/btnChuyenNganhEdit"
+        android:id="@+id/btnSV_Edit"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/primary"
@@ -23,7 +23,7 @@
         android:src="@drawable/btn_edit" />
 
     <ImageButton
-        android:id="@+id/btnChuyenNganhDelete"
+        android:id="@+id/btnSV_Delete"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/primary"

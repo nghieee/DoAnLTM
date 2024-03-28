@@ -187,6 +187,11 @@ public class AdminTeacherListActivity extends AppCompatActivity {
                             return;
                         }
                         String newGvTen = edtNewGvTen.getText().toString();
+                        if (!utils.isValidFullName(newGvTen)) {
+                            //Hiển thị thông báo lỗi nếu địa chỉ email không hợp lệ
+                            Toast.makeText(AdminTeacherListActivity.this, "Vui lòng nhập họ tên hợp lệ.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         String newNgaySinh = edtNewNgaySinh.getText().toString();
                         if (!utils.isValidDate(newNgaySinh)) {
                             Toast.makeText(AdminTeacherListActivity.this, "Ngày sinh không hợp lệ", Toast.LENGTH_SHORT).show();
@@ -251,7 +256,7 @@ public class AdminTeacherListActivity extends AppCompatActivity {
     }
     //Lấy idkhoa để hiển thị spinner
     @SuppressLint("Range")
-    static String getSelectedFacultyId(Spinner spinner) {
+    public String getSelectedFacultyId(Spinner spinner) {
         int position = spinner.getSelectedItemPosition();
         String selectedFacultyId = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();

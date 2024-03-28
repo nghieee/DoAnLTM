@@ -129,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
         } else {
             //Đăng ký thất bại
-            Toast.makeText(this, "Đăng ký tài khoản Admin thất bại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Username đã tồn tại!", Toast.LENGTH_SHORT).show();
         }
 
         db.close();

@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         medt_LogIn_Password = (EditText) findViewById(R.id.edt_LogIn_Password);
         mbtnLogin = (Button) findViewById(R.id.btnLogin);
         mtvSignup = (TextView) findViewById(R.id.tvSignup);
-        btnAdmin = (Button) findViewById(R.id.btnAdmin);
+//        btnAdmin = (Button) findViewById(R.id.btnAdmin);
 
         //Khởi tạo dbHelper
         dbHelper = new dbHelper(this);
@@ -100,12 +100,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnAdmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Admin(v);
-            }
-        });
+//        btnAdmin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Admin(v);
+//            }
+//        });
     }
 
     //Truy vấn kiểm tra tài khoản Đăng Nhập

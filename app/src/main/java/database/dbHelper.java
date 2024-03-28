@@ -62,6 +62,7 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String TB_LOPHOCPHAN_ID = "Id";
     public static final String TB_LOPHOCPHAN_IDMONHOC = "IdMonHoc";
     public static final String TB_LOPHOCPHAN_IDGIANGVIEN = "IdGV";
+    public static final String TB_LOPHOCPHAN_IDKHOA = "IdKhoa";
     public static final String TB_LOPHOCPHAN_HOCKY = "HocKy";
     public static final String TB_LOPHOCPHAN_SOLUONGSV = "SoLuongSV";
 
@@ -154,13 +155,16 @@ public class dbHelper extends SQLiteOpenHelper {
                 TB_LOPHOCPHAN_ID + " INTEGER NOT NULL UNIQUE, " +
                 TB_LOPHOCPHAN_IDMONHOC + " INTEGER, " +
                 TB_LOPHOCPHAN_IDGIANGVIEN + " INTEGER, " +
+                TB_LOPHOCPHAN_IDKHOA + " INTEGER, " +
                 TB_LOPHOCPHAN_HOCKY + " INTEGER, " +
                 TB_LOPHOCPHAN_SOLUONGSV + " INTEGER, " +
                 "FOREIGN KEY (" + TB_LOPHOCPHAN_IDMONHOC + ") REFERENCES " + TB_MONHOC + "(" + TB_MONHOC_ID + "), " +
                 "FOREIGN KEY (" + TB_LOPHOCPHAN_IDGIANGVIEN + ") REFERENCES " + TB_GIANGVIEN + "(" + TB_GIANGVIEN_ID + "), " +
+                "FOREIGN KEY (" + TB_LOPHOCPHAN_IDKHOA + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + "), " +
                 "PRIMARY KEY (" + TB_LOPHOCPHAN_ID + ")" +
                 ")";
         db.execSQL(createLopHocPhanTableQuery);
+
 
         //Tạo bảng SinhVien
         String createSinhVienTableQuery = "CREATE TABLE " + TB_SINHVIEN + " (" +
@@ -172,8 +176,8 @@ public class dbHelper extends SQLiteOpenHelper {
                 TB_SINHVIEN_NIENKHOA + " TEXT, " +
                 TB_SINHVIEN_DIACHI + " TEXT, " +
                 TB_SINHVIEN_SDT + " TEXT, " +
-                TB_SINHVIEN_IDKHOA + " INTEGER NOT NULL, " +
-                TB_SINHVIEN_IDCHUYENNGANH + " INTEGER NOT NULL, " +
+                TB_SINHVIEN_IDKHOA + " INTEGER, " +
+                TB_SINHVIEN_IDCHUYENNGANH + " INTEGER, " +
                 "FOREIGN KEY (" + TB_SINHVIEN_IDKHOA + ") REFERENCES " + TB_KHOA + "(" + TB_KHOA_ID + "), " +
                 "FOREIGN KEY (" + TB_SINHVIEN_IDCHUYENNGANH + ") REFERENCES " + TB_CHUYENNGANH + "(" + TB_CHUYENNGANH_ID + ")" +
                 ")";

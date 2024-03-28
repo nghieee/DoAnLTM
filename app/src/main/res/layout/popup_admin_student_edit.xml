@@ -6,78 +6,79 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/edt_SV_Id"
+        android:id="@+id/edt_student_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID: " />
+        android:hint="ID"
+        android:inputType="number" />
 
     <EditText
-        android:id="@+id/edt_SV_HoTen"
+        android:id="@+id/edt_student_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Họ và tên" />
 
     <EditText
-        android:id="@+id/edt_SV_NgaySinh"
+        android:id="@+id/edt_student_dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ngày sinh"
+        android:hint="Ngày sinh (dd/MM/yyyy)"
         android:inputType="date" />
 
     <RadioGroup
-        android:id="@+id/rg_SV_GioiTinh"
+        android:id="@+id/radio_group_student_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radioButtonMale"
+            android:id="@+id/radio_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nam" />
 
         <RadioButton
-            android:id="@+id/radioButtonFemale"
+            android:id="@+id/radio_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nữ" />
-
     </RadioGroup>
 
     <EditText
-        android:id="@+id/edt_SV_Email"
+        android:id="@+id/edt_student_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email" />
 
     <EditText
-        android:id="@+id/edt_SV_NienKhoa"
+        android:id="@+id/edt_student_year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Niên khóa" />
 
     <EditText
-        android:id="@+id/edt_SV_DiaChi"
+        android:id="@+id/edt_student_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Địa chỉ" />
 
     <EditText
-        android:id="@+id/edt_SV_SDT"
+        android:id="@+id/edt_student_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số điện thoại" />
+        android:hint="Số điện thoại"
+        android:inputType="phone" />
 
     <Spinner
-        android:id="@+id/spn_SV_IdKhoa"
+        android:id="@+id/spn_student_faculty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/select_faculty" />
+        android:hint="Chọn Khoa" />
 
     <Spinner
-        android:id="@+id/spn_SV_IdChuyenNganh"
+        android:id="@+id/spn_student_major"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="@string/select_faculty" />
+        android:hint="Chọn chuyên ngành" />
 
 </LinearLayout>

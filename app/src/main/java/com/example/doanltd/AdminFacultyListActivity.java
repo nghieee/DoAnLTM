@@ -118,7 +118,7 @@ public class AdminFacultyListActivity extends AppCompatActivity {
         });
     }
     //2. Danh sách Khoa
-    public static ArrayList<String> getFacultyList() {
+    public ArrayList<String> getFacultyList() {
         ArrayList<String> facultyList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = null;
